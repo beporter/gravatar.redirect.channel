@@ -98,19 +98,17 @@
                 "s": "200"
             },
             bindTo: document.querySelector("#email"),
-            parentForm: () => this.bindTo.parentNode,
 
-            init: function() {
+            init: async function() {
                 const emailInUrl = this.emailFromUrl();
-                console.log({emailInUrl})
                 if (emailInUrl.length > 0) {
-                    this.redirect(emailInUrl);
+                    return await this.redirect(emailInUrl);
                 }
                 this.bindEvents();
             },
 
             bindEvents: function() {
-                this.bindTo.addEventListener("submit", () => this.redirect(this.bindTo.value));
+                this.bindTo.form.addEventListener("submit", () => this.redirect(this.bindTo.value));
             },
 
             // Credit: https://gist.github.com/HaNdTriX/239f45939ee8b9f012861bb22808ba42
@@ -132,18 +130,11 @@
             redirect: async function(email) {
                 const qs = '?' + new URLSearchParams(this.params).toString();
                 const destination = this.base_url + await this.hasher(email) + qs;
-
-                //const destination = this.hasher(email).then((e) => { return this.base_url + e + qs;});
-                
-
-
-                console.log(destination);
-                // window.redirect(destination);
+                window.location.href = destination;
             }
         }
 
         Gravatarizer.init();
-
     </script>
 
     <noscript>
