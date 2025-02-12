@@ -1,143 +1,173 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8" />
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Gravatar Redirect Channel</title>
-        <style>
+        <link rel="stylesheet" href="style.css">
+        <meta name="description" content="Want to look up a Gravatar for a given email address? Enter it here and we'll point you to the image!">
 
-        </style>
+        <meta property="og:title" content="Gravatar Redirect Channel">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://gravatar.redirect.channel">
+        <meta property="og:image" content="">
+        <meta property="og:image:alt" content="Enter an email address, get its gravatar.com image.">
+
+        <link rel="icon" href="/favicon.ico" sizes="any">
+        <link rel="icon" href="/icon.svg" type="image/svg+xml">
+        <link rel="apple-touch-icon" href="icon.png">
+
+        <link rel="manifest" href="site.webmanifest">
+        <meta name="theme-color" content="#fafafa">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+        <link rel="stylesheet" href="custom.css">
     </head>
-    <body>
-        <h1>Gravatar Redirect Channel</h1>
+    <body class="container">
+        <header>
+            <h1>Gravatar Redirect Channel</h1>
 
-        <p>Have you ever wished you could type in someone's email address and see their <a href="https://gravatar.com">Gravatar</a>? Well now you can!</p>
+            <p>Have you ever wished you could type in someone's email address and see their <a href="https://gravatar.com">Gravatar</a>? Well now you can!</p>
+        </header>
 
-        <form action="#" method="GET">
-            <p><label for="email">Email</label> <input type="email" id="email" placeholder="you@place.com" required /></p>
-            <p><input type="submit" value="Gravatarize!" /></p>
-        </form>
+        <main>
+            <article>
+                <form action="#" method="GET">
+                    <p><label for="email">Email</label> <input type="email" id="email" placeholder="you@place.com" autocomplete="email" required></p>
+                    <p><button type="submit">Gravatarize!</button></p>
+                </form>
+            </article>
 
-        <h2>Nerd Details</h2>
+            <h2>Nerd Details</h2>
 
-        <p>This is a static site, hosted by <a href="https://pages.github.com/">GitHub Pages</a> (because it's free.) Because it's a static site, it can't do the trivial transformations on the email address server-side, so there is a minimal amount of Javascript in this page to handle the necessary processing.</p>
+            <p>This is a static site, hosted by <a href="https://pages.github.com/">GitHub Pages</a> (because it's free.) Because it's a static site, it can't do the trivial transformations on the email address server-side, so there is a minimal amount of Javascript in this page to handle the necessary processing.</p>
 
-        <p>An advanced feature is to place the email address to redirect to directly in the address bar. Example:</p>
+            <p>An advanced feature is to place the email address to redirect to directly in the address bar. Example:</p>
 
-        <p><tt>gravatar.redirect.channel/you@place.com</tt></p>
+            <p><code>gravatar.redirect.channel/you@place.com</code></p>
 
-        <p>The Javascript in this page will pick that out of the address bar in your browser, and initiate the redirect automatically. This would (again) be trivial server-side, but you can't beat free hosting, so just like with the vast majority of Javascript these days, we jump through ridiculous hoops and contort ourselves to the point that phrases like &quot;Javascript build pipeline&quot; go completely unnoticed.</p>
+            <p>The Javascript in this page will pick that out of the address bar in your browser, and initiate the redirect automatically. This would (again) be trivial server-side, but you can't beat free hosting, so just like with the vast majority of Javascript these days, we jump through ridiculous hoops and contort ourselves to the point that phrases like &quot;Javascript build pipeline&quot; go completely unnoticed.</p>
+    
+            <p>Everything on this page is 100% hand crafted. No AI, no Jekyll build steps, no npm modules. Just good old fashioned, fast as hell HTML, CSS and Javascript.</p>
+        </main>
 
-        <p>Everything on this page is 100% hand crafted. No AI, no Jekyll build steps, no npm modules. Just good old fashioned, fast as hell HTML, CSS and Javascript.</p>
+        <footer>
+            <h2>Credits and Copyright</h2>
+    
+            <p>This single use site is the product of a deranged facsination with <a href="https://gist.github.com/beporter/0f7b23ad032a1871e71654a27a306516">incorrect ChatGPT bash script output</a>. All uses, trademarks, whatever of &quot;Gravatar&quot; are the property of Automattic. I looked through their terms of service, privacy policy, user guidelines, and pretty much any other legal doc I could find, but none of them explicitly spelled out whether this is acceptable use or not.</p>
+    
+            <p>Credit to <a href="https://picocss.com/">Pico CSS</a> for this site having <i>any</i> styling. I'm a developer at heart, not a designer. 🤷‍♂️</p>
+    
+            <!--
+            <p>Images and logo courtesy of <a href="https://chrispeak.com/">Chris Peak</a>. One day he's going to get tired of entertaining my nonsense.</p>
+            -->
+    
+            <p>This site itself is Copyright &copy; 2025+ <a href="https://github.com/beporter">Brian Porter</a>. That said; it's an html file. View source, learn, use what's intersting. Pointing back here or at least to the tools credited above directly would be nice.</p>
+        </footer>
 
-        <h2>Credits and Copyright</h2>
+        <script>
+            // Credit to: https://css-tricks.com/email-domain-datalist-helper/
+            var EmailDomainSuggester = {
+                domains: ["yahoo.com", "gmail.com", "hotmail.com", "me.com", "aol.com", 
+                    "mac.com", "live.com", "comcast.com"],
 
-        <p>This single use site is the product of a deranged facsination with <a href="https://gist.github.com/beporter/0f7b23ad032a1871e71654a27a306516">incorrect ChatGPT bash script output</a>. All uses, trademarks, whatever of &quot;Gravatar&quot; are the property of Automattic. I looked through their terms of service, privacy policy, user guidelines, and pretty much any other legal doc I could find, but none of them explicitly spelled out whether this is acceptable use or not.</p>
+                bindTo: document.querySelector("#email"),
 
-        <p>This site itself is Copyright &copy; 2025+ <a href="https://github.com/beporter">Brian Porter</a>. All rights reserved, blah blah blah.</p>
+                init: function() {
+                    this.addElements();
+                    this.bindEvents();
+                },
+
+                addElements: function() {
+                    // Create empty datalist
+                    this.datalist = document.createElement("datalist");
+                    this.datalist.setAttribute("id", "email-options");
+                    this.bindTo.parentNode.appendChild(this.datalist);
+                    // Corelate to input
+                    this.bindTo.setAttribute("list", "email-options");
+                },
+
+                bindEvents: function() {
+                    this.bindTo.addEventListener("keyup", this.testValue);
+                },
+
+                testValue: function(event) {
+                    var el = this,
+                        value = el.value;
+                                    
+                    // email has @
+                    // remove != -1 to open earlier
+                    if (value.indexOf("@") != -1) {
+                        value = value.split("@")[0];
+                        EmailDomainSuggester.addDatalist(value); 
+                    } else {
+                    // empty list
+                        EmailDomainSuggester.datalist.replaceChildren();
+                    }
+                },
+
+                addDatalist: function(value) {
+                    var options = [];
+                    for (let i = 0; i < this.domains.length; i++) {
+                        const option = document.createElement('option');
+                        option.value = value + "@" + this.domains[i];
+                        options.push(option);
+                    }
+                    this.datalist.replaceChildren(...options);
+                }
+            }
+
+            EmailDomainSuggester.init();
+
+            // Credit to ME!!
+            var Gravatarizer = {
+                base_url: "https://gravatar.com/avatar/",
+                params: {
+                    "d": "identicon",
+                    "s": "200"
+                },
+                bindTo: document.querySelector("#email"),
+
+                init: async function() {
+                    const emailInUrl = this.emailFromUrl();
+                    if (emailInUrl.length > 0) {
+                        return await this.redirect(emailInUrl);
+                    }
+                    this.bindEvents();
+                },
+
+                bindEvents: function() {
+                    this.bindTo.form.addEventListener("submit", () => this.redirect(this.bindTo.value));
+                },
+
+                // Credit: https://gist.github.com/HaNdTriX/239f45939ee8b9f012861bb22808ba42
+                hasher: async function(email) {
+                    const arrayBuffer = new TextEncoder("utf-8").encode(email)
+                    const hashAsArrayBuffer = await crypto.subtle.digest('SHA-256', arrayBuffer);
+                    const uint8ViewOfHash = new Uint8Array(hashAsArrayBuffer);
+                    return Array.from(uint8ViewOfHash).map((b) => b.toString(16).padStart(2, '0')).join('');
+                },
+
+                emailFromUrl: function() {
+                    if (window.location.protocol == "file:") {
+                        return "";
+                    } else {
+                        return window.location.pathname.split("/")[1];
+                    }
+                },
+
+                redirect: async function(email) {
+                    const qs = '?' + new URLSearchParams(this.params).toString();
+                    const destination = this.base_url + await this.hasher(email) + qs;
+                    window.location.href = destination;
+                }
+            }
+
+            Gravatarizer.init();
+        </script>
+
+        <noscript>
+            <p>Unfortunately, as stated above, this site requires Javascript to function correctly. You're seeing this message because Javascript is currently disabled in your browser.</p>
+        </noscript>
     </body>
-
-    <script>
-        // Credit to: https://css-tricks.com/email-domain-datalist-helper/
-        var EmailDomainSuggester = {
-            domains: ["yahoo.com", "gmail.com", "hotmail.com", "me.com", "aol.com", 
-                "mac.com", "live.com", "comcast.com"],
-
-            bindTo: document.querySelector("#email"),
-
-            init: function() {
-                this.addElements();
-                this.bindEvents();
-            },
-
-            addElements: function() {
-                // Create empty datalist
-                this.datalist = document.createElement("datalist");
-                this.datalist.setAttribute("id", "email-options");
-                this.bindTo.parentNode.appendChild(this.datalist);
-                // Corelate to input
-                this.bindTo.setAttribute("list", "email-options");
-            },
-
-            bindEvents: function() {
-                this.bindTo.addEventListener("keyup", this.testValue);
-            },
-
-            testValue: function(event) {
-                var el = this,
-                    value = el.value;
-                                
-                // email has @
-                // remove != -1 to open earlier
-                if (value.indexOf("@") != -1) {
-                    value = value.split("@")[0];
-                    EmailDomainSuggester.addDatalist(value); 
-                } else {
-                // empty list
-                    EmailDomainSuggester.datalist.replaceChildren();
-                }
-            },
-
-            addDatalist: function(value) {
-                var options = [];
-                for (let i = 0; i < this.domains.length; i++) {
-                    const option = document.createElement('option');
-                    option.value = value + "@" + this.domains[i];
-                    options.push(option);
-                }
-                this.datalist.replaceChildren(...options);
-            }
-        }
-
-        EmailDomainSuggester.init();
-
-        // Credit to ME.
-        var Gravatarizer = {
-            base_url: "https://gravatar.com/avatar/",
-            params: {
-                "d": "identicon",
-                "s": "200"
-            },
-            bindTo: document.querySelector("#email"),
-
-            init: async function() {
-                const emailInUrl = this.emailFromUrl();
-                if (emailInUrl.length > 0) {
-                    return await this.redirect(emailInUrl);
-                }
-                this.bindEvents();
-            },
-
-            bindEvents: function() {
-                this.bindTo.form.addEventListener("submit", () => this.redirect(this.bindTo.value));
-            },
-
-            // Credit: https://gist.github.com/HaNdTriX/239f45939ee8b9f012861bb22808ba42
-            hasher: async function(email) {
-                const arrayBuffer = new TextEncoder("utf-8").encode(email)
-                const hashAsArrayBuffer = await crypto.subtle.digest('SHA-256', arrayBuffer);
-                const uint8ViewOfHash = new Uint8Array(hashAsArrayBuffer);
-                return Array.from(uint8ViewOfHash).map((b) => b.toString(16).padStart(2, '0')).join('');
-            },
-
-            emailFromUrl: function() {
-                if (window.location.protocol == "file:") {
-                    return "";
-                } else {
-                    return window.location.pathname.split("/")[1];
-                }
-            },
-
-            redirect: async function(email) {
-                const qs = '?' + new URLSearchParams(this.params).toString();
-                const destination = this.base_url + await this.hasher(email) + qs;
-                window.location.href = destination;
-            }
-        }
-
-        Gravatarizer.init();
-    </script>
-
-    <noscript>
-        <p>Unfortunately, as stated above, this site requires Javascript to function correctly. You're seeing this message because Javascript is currently disabled in your browser.</p>
-    </noscript>
 </html>
