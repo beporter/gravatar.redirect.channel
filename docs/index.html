@@ -9,36 +9,57 @@
         <meta property="og:title" content="Gravatar Redirect Channel">
         <meta property="og:type" content="website">
         <meta property="og:url" content="https://gravatar.redirect.channel">
-        <meta property="og:image" content="">
+        <meta property="og:image" content="og-image.png">
         <meta property="og:image:alt" content="Enter an email address, get its gravatar.com image.">
 
-        <link rel="icon" href="/favicon.ico" sizes="any">
-        <link rel="icon" href="/icon.svg" type="image/svg+xml">
-        <link rel="apple-touch-icon" href="icon.png">
+        <link rel="icon" href="favicon.ico" sizes="any">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
         <link rel="manifest" href="site.webmanifest">
         <meta name="theme-color" content="#fafafa">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Freeman&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
+        <!--
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
         <link rel="stylesheet" href="custom.css">
+        -->
+        <link rel="stylesheet" href="style.css">
 
         <script defer src="gravatarizer.js"></script>
     </head>
+
     <body class="container">
-        <header>
+      <main>
+        <section class="primary-content">
+          <header>
             <h1>Gravatar Redirect Channel</h1>
+          </header>
 
-            <p>Have you ever wished you could type in someone's email address and see their <a href="https://gravatar.com">Gravatar</a>? Well now you can!</p>
-        </header>
+          <article>
+              <form action="gravatarize.php" method="GET">
+                  <p><label for="email">Email</label> <input type="email" id="email" placeholder="you@place.com" autocomplete="email" required></p>
+                  <p><button type="submit">Gravatarize!</button></p>
+              </form>
+          </article>
 
-        <main>
-            <article>
-                <form action="gravatarize.php" method="GET">
-                    <p><label for="email">Email</label> <input type="email" id="email" placeholder="you@place.com" autocomplete="email" required></p>
-                    <p><button type="submit">Gravatarize!</button></p>
-                </form>
-            </article>
+          <article>
+            <span class="random-face">
+              <img src="images/face-4.svg" alt="abstract avatar" />
+            </span>
 
+            <h2>Find someone's <a href="https://gravatar.com" target="blank">Gravatar</a>!</h2>
+
+            <form action="gravatarize.php" method="GET">
+              <label for="email">Email</label>
+              <input type="email" id="email" placeholder="you@place.com" autocomplete="email" required>
+              <button type="submit">Gravatarize!</button>
+            </form>
+          </article>
+        </section>
+
+        <section>
             <h2>Advanced Usage</h2>
 
             <p>An advanced feature is to place the email address directly in the address bar. Example:</p>
@@ -69,22 +90,23 @@
             <p>For the advanced URL usage, at first the Javascript in this page would pick that out of the address bar in your browser, and initiate the redirect automatically. Just like with the vast majority of Javascript these days, we jump through ridiculous hoops and contort ourselves to the point that phrases like &quot;Javascript build pipeline&quot; go completely unnoticed. But! This ended up being the reason I had to move off Github Pages, because adding an email into the URL just caused a <code>404</code> without any way to control the redirect.</p>
 
             <p>So since this is (again) trivial on server-side, and you can't beat free hosting with ubiquitous PHP and <code>.htaccess</code> support, I <a href="">wrote the Apache directives</a> and pushed to <a href="https://heliohost.org/">HelioHost</a>, where you're now reading this from. Compared to everything else I tried, this final amounted to approximately 5% of the total time I've spent on this project, so HelioHost got a nice <a href="https://heliohost.org/#aboutus">donation</a> from me, that happens to also lock in my hosting account indefinitely.</p>
-        </main>
+        </section>
+
+        <section class="splash">
+        </section>
+
+      </main>
 
         <footer>
             <h2>Credits and Copyright</h2>
 
             <p>This single use site is the product of a deranged facsination with <a href="https://gist.github.com/beporter/0f7b23ad032a1871e71654a27a306516">incorrect ChatGPT bash script output</a>. All uses, trademarks, whatever of &quot;Gravatar&quot; are the property of Automattic. I looked through their terms of service, privacy policy, user guidelines, and pretty much any other legal doc I could find, but none of them explicitly spelled out whether this is acceptable use or not.</p>
 
-            <p>Everything on this page is 100% hand crafted. No AI, no Jekyll build steps, no npm modules. Just good old fashioned, fast as hell HTML, CSS and vanilla Javascript.</p>
-
             <p>Credit to <a href="https://picocss.com/">Pico CSS</a> for this site having <i>any</i> styling. I'm a developer at heart, not a designer. 🤷‍♂️</p>
 
-            <!--
-            <p>Images and logo courtesy of <a href="https://chrispeak.com/">Chris Peak</a>. One day he's going to get tired of entertaining my nonsense.</p>
-            -->
+            <p>Design, images and logo courtesy of <a href="https://chrispeak.com/">Chris Peak</a>. One day he's going to get tired of entertaining my nonsense.</p>
 
-            <p>This site itself is Copyright &copy; 2025+ <a href="https://github.com/beporter">Brian Porter</a>. That said; it's a bunch of <s>html</s> text files. Click the links, view source, learn, use what's intersting. Pointing back here or at least to the tools credited above directly would be nice.</p>
+            <p>This site itself is Copyright &copy; 2025+ <a href="https://github.com/beporter">Brian Porter</a>. That said; it's an html file. View source, learn, use what's intersting. Pointing back here or at least to the tools credited above directly would be nice.</p>
         </footer>
 
         <script>
@@ -147,7 +169,7 @@
         <noscript>
             <p><s>Unfortunately, as stated above, this site requires Javascript to function correctly. You're seeing this message because Javascript is currently disabled in your browser.</s></p>
 
-            <p>This site used to require Javascript. Now it doesn't. So if you're seeing this paragraph,everything still works! It's a 2025 web development miracle!</p>
+            <p>This site used to require Javascript. Now it doesn't. So if you're seeing this paragraph, everything still works! It's a 2025 web development miracle!</p>
         </noscript>
     </body>
 </html>
