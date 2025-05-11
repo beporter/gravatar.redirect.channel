@@ -4,7 +4,6 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Gravatar Redirect Channel</title>
-        <link rel="stylesheet" href="style.css">
         <meta name="description" content="Want to look up a Gravatar for a given email address? Enter it here and we'll point you to the image!">
 
         <meta property="og:title" content="Gravatar Redirect Channel">
@@ -22,6 +21,8 @@
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
         <link rel="stylesheet" href="custom.css">
+
+        <script defer src="gravatarizer.js"></script>
     </head>
     <body class="container">
         <header>
@@ -32,25 +33,42 @@
 
         <main>
             <article>
-                <form action="#" method="GET">
+                <form action="gravatarize.php" method="GET">
                     <p><label for="email">Email</label> <input type="email" id="email" placeholder="you@place.com" autocomplete="email" required></p>
                     <p><button type="submit">Gravatarize!</button></p>
                 </form>
             </article>
 
-            <h2>Nerd Details</h2>
+            <h2>Advanced Usage</h2>
 
-            <p>This is a static site, hosted by <a href="https://pages.github.com/">GitHub Pages</a> (because it's free.) Because it's a static site, it can't do the trivial transformations on the email address server-side, so there is a minimal amount of Javascript in this page to handle the necessary processing.</p>
-
-            <!--
-            <p>An advanced feature is to place the email address to redirect to directly in the address bar. Example:</p>
+            <p>An advanced feature is to place the email address directly in the address bar. Example:</p>
 
             <p><code>gravatar.redirect.channel/you@place.com</code></p>
 
-            <p>The Javascript in this page will pick that out of the address bar in your browser, and initiate the redirect automatically. This would (again) be trivial server-side, but you can't beat free hosting, so just like with the vast majority of Javascript these days, we jump through ridiculous hoops and contort ourselves to the point that phrases like &quot;Javascript build pipeline&quot; go completely unnoticed.</p>
-            -->
+            <h2>Nerd Details</h2>
 
-            <p>Everything on this page is 100% hand crafted. No AI, no Jekyll build steps, no npm modules. Just good old fashioned, fast as hell HTML, CSS and Javascript.</p>
+            <p>This was originally a static page, hosted by <a href="https://pages.github.com/">GitHub Pages</a> (because it's free.) Because it was a static site, it couldn't do the trivial transformations on the email address server-side, so there was a <a href="gravatarizer.js">minimal amount of Javascript</a> in this page to handle the necessary processing.</p>
+
+            <p>Since then, I've also implemented the redirect as an <a href="nginx/nginx.conf">nginx config</a> and <a href="nginx/gravatarize.js">accompanying js file</a> that makes use of nginx's <a href="https://nginx.org/en/docs/http/ngx_http_js_module.html">http_js module</a>, but I gave up trying to find a cheap web hosting provider that offered support for it.</p>
+
+            <p>Next, I <a href="/terraform/">explored</a> using <a href="https://developer.hashicorp.com/terraform/intro">Terraform</a> to provision:</p>
+
+            <ul>
+              <li>a Route53 zone</li>
+              <li>an ACM SSL certificate</li>
+              <li>an S3 bucket (with appropriate settings to host static html/css/js from)</li>
+              <li>an AWS Lambda (and IAM permissions)</li>
+              <li>necessary routing to the lambda</li>
+              <li>and AWS Budget alerts to prevent runaway spend</li>
+            </ul>
+
+            <p>When the <a href="terraform/main.tf">main.tf</a> file crossed 200 lines though, I gave up on that approach. 🙄 I might have been able to run that version for less than $1 USD per month, but I would have spent the rest of my life managing the infrastructure as code.</p>
+
+            <p>Ultimately, I went back to the most basic, widely available, cheap, fast, server side logic there is: <a href="gravatarize.phps">PHP</a>. Every single hosting provider on the planet has support for it out of the box, and it's trivial to deploy to any of these services, even the free ones.</p>
+
+            <p>For the advanced URL usage, at first the Javascript in this page would pick that out of the address bar in your browser, and initiate the redirect automatically. Just like with the vast majority of Javascript these days, we jump through ridiculous hoops and contort ourselves to the point that phrases like &quot;Javascript build pipeline&quot; go completely unnoticed. But! This ended up being the reason I had to move off Github Pages, because adding an email into the URL just caused a <code>404</code> without any way to control the redirect.</p>
+
+            <p>So since this is (again) trivial on server-side, and you can't beat free hosting with ubiquitous PHP and <code>.htaccess</code> support, I <a href="">wrote the Apache directives</a> and pushed to <a href="https://heliohost.org/">HelioHost</a>, where you're now reading this from. Compared to everything else I tried, this final amounted to approximately 5% of the total time I've spent on this project, so HelioHost got a nice <a href="https://heliohost.org/#aboutus">donation</a> from me, that happens to also lock in my hosting account indefinitely.</p>
         </main>
 
         <footer>
@@ -58,19 +76,21 @@
 
             <p>This single use site is the product of a deranged facsination with <a href="https://gist.github.com/beporter/0f7b23ad032a1871e71654a27a306516">incorrect ChatGPT bash script output</a>. All uses, trademarks, whatever of &quot;Gravatar&quot; are the property of Automattic. I looked through their terms of service, privacy policy, user guidelines, and pretty much any other legal doc I could find, but none of them explicitly spelled out whether this is acceptable use or not.</p>
 
+            <p>Everything on this page is 100% hand crafted. No AI, no Jekyll build steps, no npm modules. Just good old fashioned, fast as hell HTML, CSS and vanilla Javascript.</p>
+
             <p>Credit to <a href="https://picocss.com/">Pico CSS</a> for this site having <i>any</i> styling. I'm a developer at heart, not a designer. 🤷‍♂️</p>
 
             <!--
             <p>Images and logo courtesy of <a href="https://chrispeak.com/">Chris Peak</a>. One day he's going to get tired of entertaining my nonsense.</p>
             -->
 
-            <p>This site itself is Copyright &copy; 2025+ <a href="https://github.com/beporter">Brian Porter</a>. That said; it's an html file. View source, learn, use what's intersting. Pointing back here or at least to the tools credited above directly would be nice.</p>
+            <p>This site itself is Copyright &copy; 2025+ <a href="https://github.com/beporter">Brian Porter</a>. That said; it's a bunch of <s>html</s> text files. Click the links, view source, learn, use what's intersting. Pointing back here or at least to the tools credited above directly would be nice.</p>
         </footer>
 
         <script>
             // Credit to: https://css-tricks.com/email-domain-datalist-helper/
             var EmailDomainSuggester = {
-                domains: ["yahoo.com", "gmail.com", "hotmail.com", "me.com", "aol.com", 
+                domains: ["yahoo.com", "gmail.com", "hotmail.com", "me.com", "aol.com",
                     "mac.com", "live.com", "comcast.com"],
 
                 bindTo: document.querySelector("#email"),
@@ -96,12 +116,12 @@
                 testValue: function(event) {
                     var el = this,
                         value = el.value;
-                                    
+
                     // email has @
                     // remove != -1 to open earlier
                     if (value.indexOf("@") != -1) {
                         value = value.split("@")[0];
-                        EmailDomainSuggester.addDatalist(value); 
+                        EmailDomainSuggester.addDatalist(value);
                     } else {
                     // empty list
                         EmailDomainSuggester.datalist.replaceChildren();
@@ -121,55 +141,13 @@
 
             EmailDomainSuggester.init();
 
-            // Credit to ME!!
-            var Gravatarizer = {
-                base_url: "https://gravatar.com/avatar/",
-                params: {
-                    "d": "identicon",
-                    "s": "200"
-                },
-                bindTo: document.querySelector("#email"),
-
-                init: async function() {
-                    const emailInUrl = this.emailFromUrl();
-                    if (emailInUrl.length > 0) {
-                        return await this.redirect(emailInUrl);
-                    }
-                    this.bindEvents();
-                },
-
-                bindEvents: function() {
-                    this.bindTo.form.addEventListener("submit", () => this.redirect(this.bindTo.value));
-                },
-
-                // Credit: https://gist.github.com/HaNdTriX/239f45939ee8b9f012861bb22808ba42
-                hasher: async function(email) {
-                    const arrayBuffer = new TextEncoder("utf-8").encode(email)
-                    const hashAsArrayBuffer = await crypto.subtle.digest('SHA-256', arrayBuffer);
-                    const uint8ViewOfHash = new Uint8Array(hashAsArrayBuffer);
-                    return Array.from(uint8ViewOfHash).map((b) => b.toString(16).padStart(2, '0')).join('');
-                },
-
-                emailFromUrl: function() {
-                    if (window.location.protocol == "file:") {
-                        return "";
-                    } else {
-                        return window.location.pathname.split("/")[1];
-                    }
-                },
-
-                redirect: async function(email) {
-                    const qs = '?' + new URLSearchParams(this.params).toString();
-                    const destination = this.base_url + await this.hasher(email) + qs;
-                    window.location.href = destination;
-                }
-            }
-
             Gravatarizer.init();
         </script>
 
         <noscript>
-            <p>Unfortunately, as stated above, this site requires Javascript to function correctly. You're seeing this message because Javascript is currently disabled in your browser.</p>
+            <p><s>Unfortunately, as stated above, this site requires Javascript to function correctly. You're seeing this message because Javascript is currently disabled in your browser.</s></p>
+
+            <p>This site used to require Javascript. Now it doesn't. So if you're seeing this paragraph,everything still works! It's a 2025 web development miracle!</p>
         </noscript>
     </body>
 </html>
