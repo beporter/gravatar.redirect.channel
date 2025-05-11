@@ -1,0 +1,8 @@
+
+
+# IDEs
+.vscode/*
+!.vscode/extensions.json
+
+# OS files
+.DS_Store
