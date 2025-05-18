@@ -1,13 +1,12 @@
 {
-    "short_name": "GRC",
-    "name": "Gravatar Redirect Channel",
-    "icons": [{
-      "src": "icon.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    }],
-    "start_url": "/?utm_source=homescreen",
-    "background_color": "#fafafa",
-    "theme_color": "#fafafa"
-  }
-  
+  "short_name": "GRC",
+  "name": "Gravatar Redirect Channel",
+  "icons": [{
+    "src": "apple-touch-icon.png",
+    "type": "image/png",
+    "sizes": "180x180"
+  }],
+  "start_url": "/?utm_source=homescreen",
+  "background_color": "#fafafa",
+  "theme_color": "#fafafa"
+}
