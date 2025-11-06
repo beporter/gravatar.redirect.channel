@@ -35,7 +35,7 @@
 
         <article>
           <span class="random-face">
-            <img src="images/face-4.svg" alt="abstract avatar" />
+            <img src="images/face-4.svg" alt="abstract avatar">
           </span>
 
           <h2>Find someone's <a href="https://gravatar.com" target="blank">Gravatar</a>!</h2>
@@ -61,14 +61,16 @@
           <p>An advanced feature is to place the email address directly in the address bar. Example:</p>
 
           <p><code>gravatar.redirect.channel/you@place.com</code></p>
+
+          <p>This will immediately redirect you to the gravatar image URL for the email provided.</p>
         </article>
 
         <article>
           <h2>Nerd Details</h2>
 
-          <p>This was originally a static page, hosted by <a href="https://pages.github.com/">GitHub Pages</a> (because it's free.) Because it was a static site, it couldn't do the trivial transformations on the email address server-side, so there was a <a href="gravatarizer.js">minimal amount of Javascript</a> in this page to handle the necessary processing.</p>
+          <p>This was originally a static page, hosted by <a href="https://pages.github.com/">GitHub Pages</a> (because it's free.) Because it was a static site, it couldn't do the trivial server-side transformations on the email address, so there was a <a href="gravatarizer.js">minimal amount of Javascript</a> in this page to handle the necessary processing.</p>
 
-          <p>Since then, I've also implemented the redirect as an <a href="nginx/nginx.conf">nginx config</a> and <a href="nginx/gravatarize.js">accompanying js file</a> that makes use of nginx's <a href="https://nginx.org/en/docs/http/ngx_http_js_module.html">http_js module</a>, but I gave up trying to find a cheap web hosting provider that offered support for it.</p>
+          <p>Since then, I've also implemented the redirect as an <a href="nginx/nginx.conf">nginx config</a> and <a href="nginx/gravatarize.js">accompanying js file</a> that makes use of nginx's <a href="https://nginx.org/en/docs/http/ngx_http_js_module.html">http_js module</a>, but I gave up trying to find a cheap web hosting provider that offered support for custom nginx configs or its http_js module.</p>
 
           <p>Next, I <a href="/terraform/">explored</a> using <a href="https://developer.hashicorp.com/terraform/intro">Terraform</a> to provision:</p>
 
@@ -85,9 +87,9 @@
 
           <p>Ultimately, I went back to the most basic, widely available, cheap, fast, server side logic there is: <a href="gravatarize.phps">PHP</a>. Every single hosting provider on the planet has support for it out of the box, and it's trivial to deploy to any of these services, even the free ones.</p>
 
-          <p>For the advanced URL usage, at first the Javascript in this page would pick that out of the address bar in your browser, and initiate the redirect automatically. Just like with the vast majority of Javascript these days, we jump through ridiculous hoops and contort ourselves to the point that phrases like &quot;Javascript build pipeline&quot; go completely unnoticed. But! This ended up being the reason I had to move off Github Pages, because adding an email into the URL just caused a <code>404</code> without any way to control the redirect.</p>
+          <p>For the advanced URL usage, at first the Javascript in this page would pick that out of the address bar in your browser, and initiate the redirect automatically. Just like with the vast majority of Javascript these days, we jump through ridiculous hoops and contort ourselves to the point that phrases like &quot;Javascript build pipeline&quot; go completely unnoticed. But! This ended up being the reason I had to move off Github Pages, because adding an email into the URL just caused a <code>404</code> (since there was no static file named as any given email address to serve) and Pages doesn't provide any way to control the 404 or repurpose it as a redirect.</p>
 
-          <p>So since this is (again) trivial on server-side, and you can't beat free hosting with ubiquitous PHP and <code>.htaccess</code> support, I <a href="">wrote the Apache directives</a> and pushed to <a href="https://heliohost.org/">HelioHost</a>, where you're now reading this from. Compared to everything else I tried, this final amounted to approximately 5% of the total time I've spent on this project, so HelioHost got a nice <a href="https://heliohost.org/#aboutus">donation</a> from me, that happens to also lock in my hosting account indefinitely.</p>
+          <p>So since this is (again) trivial on the server-side, and you can't beat free hosting with ubiquitous PHP and <code>.htaccess</code> support, I <a href=".htaccess">wrote the Apache directives</a> and pushed to <a href="https://heliohost.org/">HelioHost</a>, where you're now reading this from. Compared to everything else I tried, this final attempt amounted to approximately 5% of the total time I've spent on this project, so HelioHost got a nice <a href="https://heliohost.org/#aboutus">donation</a> from me, that happens to also lock in my hosting account more or less indefinitely.</p>
         </article>
       </section>
 
@@ -99,7 +101,7 @@
 
           <p>Design, images and logo courtesy of <a href="https://chrispeak.com/">Chris Peak</a>. One day he's going to get tired of entertaining my nonsense.</p>
 
-          <p class="copyright">This site itself is Copyright &copy; 2025+ <a href="https://github.com/beporter">Brian Porter</a>. That said; it's an html file. View source, learn, use what's interesting. Pointing back here or at least to the tools credited above directly would be nice.</p>
+          <p class="copyright">This site itself is Copyright &copy; 2025+ <a href="https://github.com/beporter">Brian Porter</a>. That said; it's an html file and a php file, and everything is <a href="https://github.com/beporter/gravatar.redirect.channel">hosted on GitHub</a>. So view the source, learn, and use what's interesting. Pointing back here or at least to the tools credited above directly would be nice.</p>
         </article>
       </section>
     </footer>

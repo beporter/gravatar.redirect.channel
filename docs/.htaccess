@@ -11,3 +11,9 @@ php_flag log_errors 1
 
 # Allow PHP source code to render as text for inspection
 RewriteRule ^(.+\.php)s$ $1 [H=application/x-httpd-php-source]
+
+# Allow examining .htaccess files or .phps files.
+<FilesMatch "\.(htaccess|phps)$">
+  Order Allow,Deny
+  Allow from all
+</FilesMatch>
