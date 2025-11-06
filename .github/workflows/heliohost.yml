@@ -1,5 +1,5 @@
 # Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to HelioHost
+name: Deploy content to HelioHost
 
 on:
   # Runs on pushes targeting the default branch
@@ -26,44 +26,23 @@ jobs:
   deploy:
     environment:
       name: heliohost-ftp
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deploy.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: FTP Deploy
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: SFTP Deploy
+        id: deploy
+        uses: Dylan700/sftp-upload-action@v1.2.3
         with:
-          server: ${{ secrets.ftp_host }}
-          username: ${{ secrets.ftp_user }}
-          password: ${{ secrets.ftp_pass }}
-          port: 23
-          protocol: ftps
-          
-          # Folder to upload from, must end with trailing slash /
-          local-dir: docs/
-          
-          # Path to upload to on the server. Must end with trailing slash /
-          server-dir: httpdocs/
-          
-          # Path and name of the state file - this file is used to track which files have been deployed
-          state-name: github_action_ftp_state.json
-          
-          # Prints which modifications will be made with current config options, but doesnt actually make any changes
-          dry-run: true
-          
-          # Deletes ALL contents of server-dir, even items in excluded with exclude argument
-          dangerous-clean-slate: false
-          
-          # An array of glob patterns, these files will not be included in the publish/delete process
-          #exclude:
-          
-          # How verbose should the information be - minimal, standard, or verbose
-          log-level: verbose
-          
-          # strict or loose
-          security: loose
-          
-          # Timeout in milliseconds for FTP operations
-          timeout: 3000
-          
+          server: ${{ secrets.SFTP_HOST }}
+          port: ${{ secrets.SFTP_PORT }}
+          username: ${{ secrets.SFTP_USER }}
+          password: ${{ secrets.SFTP_PASS }}
+
+          uploads: |
+            ./docs/ => /beporter/httpdocs/
+
+          ignore: |
+            *.git
+            */**/*git*
