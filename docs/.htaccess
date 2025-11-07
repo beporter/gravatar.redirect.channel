@@ -4,16 +4,11 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^([A-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[A-Z0-9.-]+)$ /gravatarize.php?email=$1 [NC,L]
 
-# Prevent PHP error leaks
-php_flag display_errors 0
-php_flag display_startup_errors 0
-php_flag log_errors 1
-
 # Allow PHP source code to render as text for inspection
 RewriteRule ^(.+\.php)s$ $1 [H=application/x-httpd-php-source]
 
 # Allow examining .htaccess files or .phps files.
-<FilesMatch "\.(htaccess|phps)$">
+<FilesMatch "\.(htaccess|user\.ini|phps)$">
   Order Allow,Deny
   Allow from all
 </FilesMatch>
