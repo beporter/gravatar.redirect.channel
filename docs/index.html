@@ -42,7 +42,7 @@
 
           <form action="gravatarize.php" method="GET">
             <label for="email">Email</label>
-            <input type="email" id="email" placeholder="you@place.com" autocomplete="email" required>
+            <input type="email" id="email" name="email" placeholder="you@place.com" autocomplete="email" required>
             <button type="submit">Gravatarize!</button>
           </form>
         </article>
@@ -70,7 +70,7 @@
 
           <p>This was originally a static page, hosted by <a href="https://pages.github.com/">GitHub Pages</a> (because it's free.) Because it was a static site, it couldn't do the trivial server-side transformations on the email address, so there was a <a href="gravatarizer.js">minimal amount of Javascript</a> in this page to handle the necessary processing.</p>
 
-          <p>Since then, I've also implemented the redirect as an <a href="nginx/nginx.conf">nginx config</a> and <a href="nginx/gravatarize.js">accompanying js file</a> that makes use of nginx's <a href="https://nginx.org/en/docs/http/ngx_http_js_module.html">http_js module</a>, but I gave up trying to find a cheap web hosting provider that offered support for custom nginx configs or its http_js module.</p>
+          <p>Since then, I've also implemented the redirect as an <a href="nginx/gravatarize.conf">nginx config</a> with an <a href="nginx/gravatarize.js">accompanying js file</a> that makes use of nginx's <a href="https://nginx.org/en/docs/http/ngx_http_js_module.html">http_js module</a>, but I gave up trying to find a cheap web hosting provider that offered support for custom nginx configs or its http_js module.</p>
 
           <p>Next, I <a href="/terraform/">explored</a> using <a href="https://developer.hashicorp.com/terraform/intro">Terraform</a> to provision:</p>
 
@@ -85,7 +85,7 @@
 
           <p>When the <a href="terraform/main.tf">main.tf</a> file crossed 200 lines though, I gave up on that approach. 🙄 I might have been able to run that version for less than $1 USD per month, but I would have spent the rest of my life managing the infrastructure as code.</p>
 
-          <p>Ultimately, I went back to the most basic, widely available, cheap, fast, server side logic there is: <a href="gravatarize.phps">PHP</a>. Every single hosting provider on the planet has support for it out of the box, and it's trivial to deploy to any of these services, even the free ones.</p>
+          <p>Ultimately, I <a href="gravatarize.phps">went back to</a> the most basic, widely available, cheap, fast, server side logic there is: <a href="https://php.net">PHP</a>. Every single hosting provider on the planet has support for it out of the box, and it's trivial to deploy to any of these services, even the free ones.</p>
 
           <p>For the advanced URL usage, at first the Javascript in this page would pick that out of the address bar in your browser, and initiate the redirect automatically. Just like with the vast majority of Javascript these days, we jump through ridiculous hoops and contort ourselves to the point that phrases like &quot;Javascript build pipeline&quot; go completely unnoticed. But! This ended up being the reason I had to move off Github Pages, because adding an email into the URL just caused a <code>404</code> (since there was no static file named as any given email address to serve) and Pages doesn't provide any way to control the 404 or repurpose it as a redirect.</p>
 

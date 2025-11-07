@@ -3,6 +3,7 @@
  * Look for a GET[email] variable.
  * When not present or invalid, redirect to /index.html.
  * When present, strip whitespace, lowercase, sha256, redirect to gravatar url.
+ * Requires PHP v8.4+ to use `mb_trim()`.
  */
 declare(strict_types=1);
 
@@ -18,7 +19,7 @@ function input(): string {
     redirect('/index.html');
   }
 
-  return mb_strtolower($email, 'UTF-8');
+  return $email;
 }
 
 function gravatarize(string $email): string {
