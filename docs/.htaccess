@@ -8,7 +8,13 @@ RewriteRule ^([A-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[A-Z0-9.-]+)$ /gravatarize.php?email
 RewriteRule ^(.+\.php)s$ $1 [H=application/x-httpd-php-source]
 
 # Allow examining .htaccess files or .phps files.
+<Directory "/home/gravatar.redirect.channel/httpdocs">
+  AllowOverride FileInfo
+  AddType application/x-httpd-php-source .phps
+</Directory>
+<FilesMatch "\.phps$">
+  SetHandler application/x-httpd-php-source
+</FilesMatch>
 <FilesMatch "\.(htaccess|user\.ini|phps)$">
-  Order Allow,Deny
-  Allow from all
+  Require all granted
 </FilesMatch>
