@@ -1,25 +1,15 @@
-# Match any email-like URL
+# Enable Apache URL rewriting.
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
+
+# Recognize `domain.com/email@place.com` patterns and redirect through the php script.
 RewriteRule ^([A-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[A-Z0-9.-]+)$ /gravatarize.php?email=$1 [NC,L]
 
-# <Directory />
-#   AllowOverride Indexes
-#   Options FollowSymLinks
-# </Directory>
-
-# Allow PHP source code to render as text for inspection
-AddType application/x-httpd-php-source .phps
+# (Easily) allow PHP source code to render as text for inspection under Apache's mod_php.
 # RewriteRule ^(.+\.php)s$ $1 [H=application/x-httpd-php-source]
-# --or--
-RewriteRule ^(.+\.php)s$ $1 [H=php-script]
 
 # Allow examining .htaccess files or .phps files.
-#AllowOverride FileInfo
-# <FilesMatch "\.phps$">
-#   SetHandler application/x-httpd-php-source
-# </FilesMatch>
 <FilesMatch "\.(htaccess|user\.ini|phps)$">
   Require all granted
 </FilesMatch>
