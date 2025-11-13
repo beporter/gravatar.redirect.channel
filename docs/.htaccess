@@ -7,7 +7,22 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^([A-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[A-Z0-9.-]+)$ /gravatarize.php?email=$1 [NC,L]
 
 # (Easily) allow PHP source code to render as text for inspection under Apache's mod_php.
-# RewriteRule ^(.+\.php)s$ $1 [H=application/x-httpd-php-source]
+#RewriteRule ^(.+\.php)s$ $1 [H=application/x-httpd-php-source]
+
+# Janky alternative way is to use a PHP script to highlight and render the
+# source as HTML.
+RewriteRule ^(.+\.php)s$ /highlight.php?file=$1
+
+# Failed experiments trying to get FastCGI to process `.phps` files as `.php` files.
+#<FilesMatch "\.phps$">
+#  Options +ExecCGI
+#  SetHandler fcgid-script
+#  FCGIWrapper /var/www/cgi-bin/cgi_wrapper/cgi_wrapper .phps
+#</FilesMatch>
+#AddType text/html .phps
+#AddType fcgid-script .phps
+#AddHandler fcgid-script .phps
+# (All of the above with `plesk-php84-fastcgi` as the handler name.)
 
 # Allow examining .htaccess files or .phps files.
 <FilesMatch "\.(htaccess|user\.ini|phps)$">
