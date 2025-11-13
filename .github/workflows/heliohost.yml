@@ -1,4 +1,4 @@
-# Simple workflow for deploying static content to GitHub Pages
+# Upload static content via SFTP to hosting provider.
 name: Deploy content to HelioHost
 
 on:
